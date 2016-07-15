@@ -82,9 +82,13 @@ sudo -u postgres psql -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO
 sudo -u postgres psql -c 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "www-data";' dbfd;
 sudo -u postgres psql -c 'GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO "www-data";' dbfd;
 
+echo "CREATING GEO GROUP"
+sudo usermod -a -G geo usrfd
+sudo usermod -a -G geo "www-data"
+
 echo "CREATING MAPS FOLDER"
 sudo -u usrfd bash -c "mkdir /home/usrfd/maps"
-sudo chown "www-data":"www-data" -R /home/usrfd/maps
+sudo chown usrfd:geo -R /home/usrfd/maps
 
 echo "SETTING UP APACHE" 
 sudo a2enmod wsgi
